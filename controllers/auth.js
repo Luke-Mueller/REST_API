@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator');
+
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -18,7 +19,8 @@ exports.signup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  bcrypt.hash(password, 12)
+  bcrypt
+    .hash(password, 12)
     .then(hashedPw => {
       const user = new User({
         name: name,
@@ -58,7 +60,8 @@ exports.login = (req, res, next) => {
         error.statusCode = 401;
         throw error;
       }
-      const token = jwt.sign({ 
+      const token = jwt.sign(
+        { 
           email: loadedUser.email, 
           userId: loadedUser._id.toString() 
         }, 

@@ -17,7 +17,7 @@ router.put('/signup', [
           if (userDoc) {
             return Promise.reject('Email address already exists');
           }
-        })
+        });
     })
     .normalizeEmail(),
   body('password')
